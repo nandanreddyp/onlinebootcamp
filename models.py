@@ -1,11 +1,12 @@
-import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 
-conn = sqlite3.connect('database.db')
-cursor = conn.cursor()
+db = SQLAlchemy()
 
-cursor.execute('''
-CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)
-''')
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    role = db.Column(db.String(80), nullable=False, default='user')
 
-conn.commit()
-conn.close()
+    def __repr__(self):
+        return f'<User {self.id} {self.name}>'
