@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 60%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Subjects</h1>
+    {% if not is_update %}
+        <form action="/subjects" method="post">
+            <input name="name" type="text" placeholder="Subject name" required>
+            <input name="description" type="text" placeholder="Subject description">
+            <button type="submit">Add Subject</button>
+        </form>
+    {% else %}
+        <form action="/subjects" method="post">
+            <input name="update" type="radio" checked hidden>
+            <input name="subject_id" type="text" value="{{ subject.id }}" hidden>
+            <input name="name" type="text" placeholder="Subject name" required value="{{ subject.name }}">
+            <input name="description" type="text" placeholder="Subject description" value="{{ subject.description }}">
+            <button type="submit">Update Subject</button>
+        </form>
+    {% endif %}
+    {% if not is_update %}
+        <table>
+            <tr>
+            <th>Sl.no</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+            </tr>
+            {% for subject in subjects %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="/subjects/{{ subject.id }}">{{ subject.name }}</a></td>
+                    <td>{{ subject.description }}</td>
+                    <td>
+                        <form action="/subjects" method="post">
+                            <input name="subject_id" type="text" value="{{ subject.id }}" hidden>
+                            <input name="delete" type="radio" checked hidden>
+                            <button type="submit">Delete</button>
+                        </form>
+                        <a style="text-decoration: none; background-color: blue; color: white; border-radius: 10px; padding: 10px;" href="/subjects?update=True&subject_id={{ subject.id }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

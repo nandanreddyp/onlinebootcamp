@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .subject-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 300px;
+            text-align: left;
+        }
+        .subject-card h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .subject-info {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Subject Information</h1>
+
+    <div class="subject-card">
+        <h2>{{subject.name}}</h2>
+        <p class="subject-info"><strong>ID: </strong>{{subject.id}}</p>
+        <p class="subject-info"><strong>Name: </strong>{{subject.name}}</p>
+        <p class="subject-info"><strong>Description: </strong>{% if subject.description %} {{ subject.description }} {% else %} None {% endif %}</p>
+    </div>
+
+    <a style="display: flex;" href="/subjects">Go back</a>
+
+</body>
+</html>
